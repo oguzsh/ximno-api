@@ -10,63 +10,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_18_151855) do
+ActiveRecord::Schema[7.0].define(version: 20_221_118_151_855) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "comments", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
-    t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_comments_on_post_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
+  create_table 'comments', force: :cascade do |t|
+    t.bigint 'user_id', null: false
+    t.bigint 'post_id', null: false
+    t.text 'body'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['post_id'], name: 'index_comments_on_post_id'
+    t.index ['user_id'], name: 'index_comments_on_user_id'
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_posts_on_user_id"
+  create_table 'posts', force: :cascade do |t|
+    t.bigint 'user_id', null: false
+    t.string 'body'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['user_id'], name: 'index_posts_on_user_id'
   end
 
-  create_table "training_programs", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "training_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["training_id"], name: "index_training_programs_on_training_id"
-    t.index ["user_id"], name: "index_training_programs_on_user_id"
+  create_table 'training_programs', force: :cascade do |t|
+    t.bigint 'user_id', null: false
+    t.bigint 'training_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['training_id'], name: 'index_training_programs_on_training_id'
+    t.index ['user_id'], name: 'index_training_programs_on_user_id'
   end
 
-  create_table "trainings", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.integer "set_count"
-    t.time "duration"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'trainings', force: :cascade do |t|
+    t.string 'title'
+    t.text 'body'
+    t.integer 'set_count'
+    t.time 'duration'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table 'users', force: :cascade do |t|
+    t.string 'email', default: '', null: false
+    t.string 'encrypted_password', default: '', null: false
+    t.string 'reset_password_token'
+    t.datetime 'reset_password_sent_at'
+    t.datetime 'remember_created_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'first_name', null: false
+    t.string 'last_name', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
-  add_foreign_key "comments", "posts"
-  add_foreign_key "comments", "users"
-  add_foreign_key "posts", "users"
-  add_foreign_key "training_programs", "trainings"
-  add_foreign_key "training_programs", "users"
+  add_foreign_key 'comments', 'posts'
+  add_foreign_key 'comments', 'users'
+  add_foreign_key 'posts', 'users'
+  add_foreign_key 'training_programs', 'trainings'
+  add_foreign_key 'training_programs', 'users'
 end
