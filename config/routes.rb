@@ -1,7 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_scope :user do
+    # Redirests signing out users back to sign-in
+    get 'users', to: 'devise/sessions#new', controllers: { sessions: 'sessions' }
+  end
 
-  # Defines the root path route ("/")
-  root 'home#index'
+  devise_for :users, controllers: { sessions: 'sessions' }
+
+  root 'feeds#index'
+
+  resources :posts do
+    resources :comments
+  end
+
+  resources :trainings_programs do
+    resources :trainings
+  end
+
 end
