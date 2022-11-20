@@ -1,0 +1,17 @@
+<h1> KeepFit </h1>
+
+<p>Welcome <%= current_user.name.familiar %></p>
+
+
+<h3> Posts </h3>
+<% @posts.each do |post| %>
+  <div class="post" style="border:1px solid black;margin:8px;padding:8px;">
+   <% if post.image.attached? %>
+    <image style="width:180px;height:180px;" src="<%= url_for(post.image) %>">
+   <% end %>
+    <h2><%= post.body %></h2>
+    <p><%= post.created_at %></p>
+    <p><%= post.user.name.familiar %></p>
+    <p>Total Comments: <%= post.comments.count %></p>
+  </div>
+<% end %>

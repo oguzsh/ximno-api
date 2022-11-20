@@ -1,0 +1,18 @@
+
+<h2>New Post</h2>
+
+<%= form_with model: @post, url: posts_path, method: :post, data: { turbo: false } do |f| %>
+  <div class="field">
+    <%= f.label :body %><br />
+    <%= f.text_field :body, autocomplete: "text" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Image %><br />
+    <%= f.file_field :image, required: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Share" %>
+  </div>
+<% end %>
