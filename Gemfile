@@ -49,8 +49,14 @@ gem 'bootsnap', require: false
 gem 'image_processing', '~> 1.2'
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'annotate'
+  gem 'brakeman'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'main'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails', '~> 5.0.0'
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec'
 end
 
 group :development do
@@ -63,7 +69,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  gem 'annotate'
+  gem 'better_errors'
 end
 
 group :test do
@@ -74,7 +80,4 @@ group :test do
 end
 
 gem 'devise', '~> 4.8'
-
 gem 'name_of_person', '~> 1.1'
-
-gem "rename", "~> 1.0"
