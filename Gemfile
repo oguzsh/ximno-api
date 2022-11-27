@@ -76,3 +76,5 @@ end
 gem 'devise', '~> 4.8'
 
 gem 'name_of_person', '~> 1.1'
+
+gem "rename", "~> 1.0"
