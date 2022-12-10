@@ -79,5 +79,6 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'aws-sdk-s3'
 gem 'devise', '~> 4.8'
 gem 'name_of_person', '~> 1.1'

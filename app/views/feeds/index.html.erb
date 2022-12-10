@@ -6,9 +6,7 @@
 <h3> Posts </h3>
 <% @posts.each do |post| %>
   <div class="post" style="border:1px solid black;margin:8px;padding:8px;">
-   <% if post.image.attached? %>
-    <image style="width:180px;height:180px;" src="<%= url_for(post.image) %>">
-   <% end %>
+    <%= image_tag(post.image, width: 200) if post.image.attached? %>
     <h2><%= post.body %></h2>
     <p><%= post.created_at %></p>
     <p><%= post.user.name.familiar %></p>
