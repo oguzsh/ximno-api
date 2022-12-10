@@ -12,5 +12,6 @@
 #  updated_at          :datetime         not null
 #
 class Training < ApplicationRecord
-  has_and_belongs_to_many :training_programs, dependent: :destroy
+  has_many :training_pools
+  has_many :training_programs, through: :training_pools
 end

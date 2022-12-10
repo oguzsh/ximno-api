@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_232322) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_10_203830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_232322) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "training_pools", force: :cascade do |t|
+    t.bigint "training_id", null: false
+    t.bigint "training_program_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["training_id"], name: "index_training_pools_on_training_id"
+    t.index ["training_program_id"], name: "index_training_pools_on_training_program_id"
+  end
+
   create_table "training_programs", force: :cascade do |t|
     t.string "title", null: false
     t.string "description", null: false
@@ -71,22 +80,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_232322) do
     t.index ["user_id"], name: "index_training_programs_on_user_id"
   end
 
-  create_table "training_programs_trainings", id: false, force: :cascade do |t|
-    t.bigint "training_program_id"
-    t.bigint "training_id"
-    t.index ["training_id"], name: "index_training_programs_trainings_on_training_id"
-    t.index ["training_program_id"], name: "index_training_programs_trainings_on_training_program_id"
-  end
-
   create_table "trainings", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.integer "rep_count"
     t.time "duration"
-    t.bigint "training_program_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["training_program_id"], name: "index_trainings_on_training_program_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_232322) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "training_pools", "training_programs"
+  add_foreign_key "training_pools", "trainings"
   add_foreign_key "training_programs", "users"
-  add_foreign_key "trainings", "training_programs"
 end

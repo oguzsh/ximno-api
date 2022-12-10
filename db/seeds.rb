@@ -31,24 +31,27 @@ Comment.create({ user: admin_user, post: post2, body: 'This is comment for admin
 puts '### TRAININGS ### '
 puts 'Creating trainings...'
 training1 = Training.create({ title: 'Training 1', description: 'This is training 1', rep_count: 5,
-                              duration: Time.now })
+                              duration: Time.zone.now })
 training2 = Training.create({ title: 'Training 2', description: 'This is training 2', rep_count: 15,
-                              duration: Time.now })
+                              duration: Time.zone.now })
 training3 = Training.create({ title: 'Training 3', description: 'This is training 3', rep_count: 12,
-                              duration: Time.now })
+                              duration: Time.zone.now })
 
 puts '### TRAINING PROGRAMS ### '
 puts 'Creating training programs...'
 training_program1 = TrainingProgram.create({ title: 'Training Program 1',
                                              description: 'This is training program 1 description ', user: normal_user })
 training_program1.trainings << training1
+training_program1.trainings << training2
 
 training_program2 = TrainingProgram.create({ title: 'Training Program 2',
                                              description: 'This is training program 2 description', user: admin_user })
 training_program2.trainings << training2
+training_program2.trainings << training3
 
 training_program3 = TrainingProgram.create({ title: 'Training Program 3',
                                              description: 'This is training program 3description', user: normal_user })
+training_program3.trainings << training1
 training_program3.trainings << training3
 
 puts '### SEED FINISHED ###'

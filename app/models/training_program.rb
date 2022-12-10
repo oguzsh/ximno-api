@@ -11,5 +11,6 @@
 #
 class TrainingProgram < ApplicationRecord
   belongs_to :user
-  has_and_belongs_to_many :trainings, dependent: :destroy
+  has_many :training_pools
+  has_many :trainings, through: :training_pools
 end

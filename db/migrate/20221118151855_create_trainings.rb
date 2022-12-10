@@ -5,7 +5,6 @@ class CreateTrainings < ActiveRecord::Migration[7.0]
       t.text :description
       t.integer :rep_count
       t.time :duration
-      t.references :training_program, null: true, foreign_key: true
 
       t.timestamps
     end
