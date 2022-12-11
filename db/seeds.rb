@@ -10,48 +10,73 @@ puts '### SEED START ###'
 #  Admin User
 puts '### USERS ### '
 puts 'Creating admin user...'
-admin_user = User.create!({ email: 'admin@gmail.com', first_name: 'Admin', last_name: 'Root', password: '12345678',
-                            password_confirmation: '12345678' })
+User.create!({ email: 'admin@gmail.com', first_name: 'Admin', last_name: 'Root', password: '12345678',
+               password_confirmation: '12345678' })
 
-puts 'Creating normal user...'
-normal_user = User.create!({ email: 'ozi@gmail.com', first_name: 'Ozi', last_name: 'Ince', password: '12345678',
-                             password_confirmation: '12345678' })
+puts 'Creating normal users...'
+20.times do |n|
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
+  email = "example-#{n + 1}@gmail.org"
+  password = 'password'
+  User.create!({ first_name: first_name, last_name: last_name, email: email, password: password, password_confirmation: password })
+end
 
 puts '### POSTS ### '
 puts 'Creating posts...'
 
-post1 = Post.create({ user: normal_user, body: 'This is post for normal user', archived: false })
-post2 = Post.create({ user: admin_user, body: 'This is post for admin user', archived: false })
+users = User.allT
+25.times do |_n|
+  content = Faker::Lorem.sentence(word_count: 5)
+  users.each { |user| user.posts.create!({ body: content }) }
+end
 
 puts '### COMMENTS ### '
 puts 'Creating comments...'
-Comment.create({ user: normal_user, post: post1, body: 'This is comment for normal post' })
-Comment.create({ user: admin_user, post: post2, body: 'This is comment for admin post' })
+posts = Post.all
+10.times do |_n|
+  content = Faker::Lorem.sentence
+  posts.each { |post| post.comments.create!({ user: post.user, body: content }) }
+end
 
 puts '### TRAININGS ### '
 puts 'Creating trainings...'
-training1 = Training.create({ title: 'Training 1', description: 'This is training 1', rep_count: 5,
-                              duration: Time.zone.now })
-training2 = Training.create({ title: 'Training 2', description: 'This is training 2', rep_count: 15,
-                              duration: Time.zone.now })
-training3 = Training.create({ title: 'Training 3', description: 'This is training 3', rep_count: 12,
-                              duration: Time.zone.now })
+12.times do |_n|
+  title = "Training #{Faker::Number.digit}"
+  description = Faker::Lorem.sentence(word_count: 4)
+  rep_count = Faker::Number.digit
+  duration = Time.zone.now
+
+  Training.create({ title: title, description: description, rep_count: rep_count, duration: duration })
+end
 
 puts '### TRAINING PROGRAMS ### '
 puts 'Creating training programs...'
-training_program1 = TrainingProgram.create({ title: 'Training Program 1',
-                                             description: 'This is training program 1 description ', user: normal_user })
-training_program1.trainings << training1
-training_program1.trainings << training2
 
-training_program2 = TrainingProgram.create({ title: 'Training Program 2',
-                                             description: 'This is training program 2 description', user: admin_user })
-training_program2.trainings << training2
-training_program2.trainings << training3
+trainings = Training.first(6)
+training_second = Training.last(6)
+2.times do |n|
+  title = "Training Program #{Faker::Number.digit}"
+  description = Faker::Lorem.sentence(word_count: 5)
 
-training_program3 = TrainingProgram.create({ title: 'Training Program 3',
-                                             description: 'This is training program 3description', user: normal_user })
-training_program3.trainings << training1
-training_program3.trainings << training3
+  training_program = TrainingProgram.create({ title: title, description: description, user: users[n] })
+
+  training_program.trainings = if n <= 3
+                                 trainings
+                               else
+                                 training_second
+                               end
+end
+
+puts '### USER RELATIONS ### '
+puts 'Creating user relations...'
+users = User.all
+user = users.first
+
+following = users[2..25]
+followers = users[3..15]
+
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }
 
 puts '### SEED FINISHED ###'
