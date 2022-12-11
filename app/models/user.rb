@@ -23,4 +23,22 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :training_programs, dependent: :destroy
+
+  has_many :received_follows, foreign_key: :followed_user_id, class_name: 'Follow', dependent: :destroy
+  has_many :followers, through: :received_follows, source: :follower
+
+  has_many :given_follows, foreign_key: :follower_id, class_name: 'Follow', dependent: :destroy
+  has_many :followings, through: :given_follows, source: :followed_user
+
+  def follow(user)
+    given_follows.create(followed_user_id: user.id)
+  end
+
+  def unfollow(user)
+    given_follows.find_by(followed_user_id: user.id).destroy
+  end
+
+  def following?(user)
+    followings.include?(user)
+  end
 end
