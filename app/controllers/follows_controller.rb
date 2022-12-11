@@ -1,4 +1,4 @@
-class FollowersController < ApplicationController
+class FollowsController < ApplicationController
   def create
     user = User.find_by(id: params[:user_id])
     current_user.follow(user)
