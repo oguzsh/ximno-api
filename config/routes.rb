@@ -5,15 +5,19 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: { sessions: 'sessions' }
+  resource :users do
+    member do
+      get :following, :followers
+    end
+  end
 
   root 'feeds#index'
 
   resources :posts do
     resources :comments
   end
-
   resources :trainings_programs do
     resources :trainings
   end
-
+  resources :follows, only: %i[create destroy]
 end
